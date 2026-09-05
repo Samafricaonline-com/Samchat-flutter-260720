@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
             children: [
               const Spacer(),
               Image.asset(
-                'assets/images/samchat_logo.png',
+                'assets/images/samchat_logo_clean.png',
                 width: 120,
                 height: 120,
               ),

@@ -50,7 +50,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset('assets/images/samchat_logo.png', width: 96, height: 96),
+                Image.asset('assets/images/samchat_logo_clean.png', width: 96, height: 96),
                 const SizedBox(height: 24),
                 Text('Samchat is locked', style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 8),

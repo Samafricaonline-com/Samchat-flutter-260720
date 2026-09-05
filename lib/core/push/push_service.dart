@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:samchat_telecom/samchat_telecom.dart';
 
 import '../api/endpoints.dart';
 import '../storage/local_prefs_service.dart';
@@ -143,6 +144,15 @@ class PushService {
     if (type == 'incoming_call') {
       // The realtime IncomingCall socket event already drives the in-app
       // full-screen route while foregrounded — the push is redundant here.
+      return;
+    }
+    if (type == 'call_ended' || type == 'call_answered') {
+      final callId = data['call_id']?.toString() ?? '';
+      if (callId.isNotEmpty) {
+        // Stop native ringing if Telecom was triggered (e.g. from background)
+        // just before the app came to foreground.
+        await SamchatTelecom.endCall(callId);
+      }
       return;
     }
     if (type == 'message') {

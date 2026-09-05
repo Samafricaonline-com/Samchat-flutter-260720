@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'notification_actions.dart';
@@ -44,7 +45,7 @@ class LocalNotificationsService {
   );
 
   Future<void> init({required void Function(String? payload) onTap}) async {
-    const androidInit = AndroidInitializationSettings('@drawable/samchat_logo');
+    const androidInit = AndroidInitializationSettings('@drawable/ic_notification');
     const iosInit = DarwinInitializationSettings();
     await _plugin.initialize(
       const InitializationSettings(android: androidInit, iOS: iosInit),
@@ -67,7 +68,12 @@ class LocalNotificationsService {
     await androidPlugin?.createNotificationChannel(_messagesChannel);
     await androidPlugin?.createNotificationChannel(_callsChannel);
     await androidPlugin?.createNotificationChannel(_emailsChannel);
-    await androidPlugin?.requestNotificationsPermission();
+    try {
+      await androidPlugin?.requestNotificationsPermission();
+    } catch (_) {
+      // Background isolates have no Activity, so requesting permissions here 
+      // throws a NullPointerException on the native Android side. Ignore it.
+    }
   }
 
   Future<void> showMessageNotification({
@@ -87,6 +93,8 @@ class LocalNotificationsService {
           channelDescription: _messagesChannel.description,
           importance: Importance.high,
           priority: Priority.high,
+          color: const Color(0xFFFC4804),
+          largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
           actions: const [_replyAction],
         ),
         iOS: const DarwinNotificationDetails(),
@@ -117,6 +125,8 @@ class LocalNotificationsService {
           channelDescription: _emailsChannel.description,
           importance: Importance.high,
           priority: Priority.high,
+          color: const Color(0xFFFC4804),
+          largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
           actions: replyable ? const [_replyAction] : null,
         ),
         iOS: const DarwinNotificationDetails(),

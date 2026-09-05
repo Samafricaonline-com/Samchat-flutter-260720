@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'package:flutter/widgets.dart';
+
 import '../api/endpoints.dart';
 import '../config/app_config.dart';
 import '../crypto/e2ee_repository.dart';
@@ -19,6 +21,8 @@ import '../storage/secure_storage_service.dart';
 /// (see local_notifications_service.dart) route through this same function.
 @pragma('vm:entry-point')
 Future<void> handleNotificationAction(NotificationResponse response) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
   final payload = response.payload;
   final actionId = response.actionId;
   final input = response.input?.trim();
@@ -66,7 +70,10 @@ Future<String> decryptPushMessageBody(Map<String, dynamic> data, {required Strin
     if (dio == null) return fallback;
     final e2ee = E2eeService(storage: SecureStorageService(), repository: E2eeRepository(dio));
     await e2ee.loadLocalIdentity();
-    final decrypted = await e2ee.tryDecrypt(chatId, content);
+    final decrypted = await e2ee.tryDecrypt(chatId, content).timeout(
+      const Duration(seconds: 3),
+      onTimeout: () => null,
+    );
     return decrypted ?? fallback;
   } catch (_) {
     return fallback;

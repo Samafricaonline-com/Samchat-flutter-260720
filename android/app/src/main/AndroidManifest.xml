@@ -193,7 +193,7 @@
              pubspec.yaml doc comment for why). -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/samchat_logo" />
+            android:resource="@drawable/ic_notification" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="samchat_messages" />

@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/widgets.dart';
 import 'package:samchat_telecom/samchat_telecom.dart';
 
 import 'local_notifications_service.dart';
@@ -11,6 +13,9 @@ import 'notification_actions.dart';
 /// main isolate is running (see push_service.dart).
 @pragma('vm:entry-point')
 Future<void> fcmBackgroundHandler(RemoteMessage message) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  
   final data = message.data;
   final type = data['type'];
 
@@ -37,6 +42,14 @@ Future<void> fcmBackgroundHandler(RemoteMessage message) async {
         callerName: data['caller_name']?.toString() ?? 'Someone',
         payload: 'incoming_call:${data['call_id']}',
       );
+    }
+    return;
+  }
+  
+  if (type == 'call_ended' || type == 'call_answered') {
+    final callId = data['call_id']?.toString() ?? '';
+    if (callId.isNotEmpty) {
+      await SamchatTelecom.endCall(callId);
     }
     return;
   }

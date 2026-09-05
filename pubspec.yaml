@@ -2,7 +2,7 @@ name: samchat_flutter
 description: "SamChat — a modern WhatsApp-style chat app."
 publish_to: 'none'
 
-version: 1.0.2+101
+version: 1.0.3+102
 
 environment:
   sdk: ^3.11.5
@@ -113,12 +113,12 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/samchat_logo.png"
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/images/samchat_logo.png"
+  image_path: "assets/images/samchat_logo_clean.png"
+  adaptive_icon_background: "#fc4804"
+  adaptive_icon_foreground: "assets/images/samchat_logo_clean.png"
   min_sdk_android: 21
   remove_alpha_ios: true
-  background_color_ios: "#FFFFFF"
+  background_color_ios: "#fc4804"
 
 flutter:
   uses-material-design: true

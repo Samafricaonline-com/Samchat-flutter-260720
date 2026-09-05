@@ -114,12 +114,14 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
                   children: [
                     Icon(Icons.email_outlined, size: 14, color: scheme.primary),
                     const SizedBox(width: 4),
-                    Text(
-                      'Also check your inbox at $emailHint',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: scheme.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
+                    Expanded(
+                      child: Text(
+                        'Also check your inbox at $emailHint',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: scheme.primary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
                     ),
                   ],
                 ),

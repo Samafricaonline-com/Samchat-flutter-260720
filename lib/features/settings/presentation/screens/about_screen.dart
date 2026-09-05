@@ -11,7 +11,7 @@ class AboutScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('assets/images/samchat_logo.png', width: 88, height: 88),
+            Image.asset('assets/images/samchat_logo_clean.png', width: 88, height: 88),
             const SizedBox(height: 16),
             Text('Samchat', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 4),
